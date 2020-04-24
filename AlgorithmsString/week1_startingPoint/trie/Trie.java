@@ -1,3 +1,5 @@
+package com.coursera.algorithms.string.tries;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,11 +25,48 @@ public class Trie {
         }
     }
 
+    /**
+     * 3
+     * ATAGA
+     * ATC
+     * GAT
+     * @param patterns
+     * @return
+     */
     List<Map<Character, Integer>> buildTrie(String[] patterns) {
         List<Map<Character, Integer>> trie = new ArrayList<Map<Character, Integer>>();
 
         // write your code here
-
+        int counter = 0;
+        
+        for(String pattern: patterns) {
+        	
+        	char[] arrPat = pattern.toCharArray();
+        	for(int i = 0; i < arrPat.length; i++) {
+        		Map<Character, Integer> node = new HashMap<>();
+        		counter++; //Increase the position counter
+        		char c = arrPat[i];
+        		if(i > trie.size() - 1) { //Number of elements in the list
+        			//Add a new map to the list - New level
+        			node.put(c, counter);
+        			trie.add(node);
+        			System.out.println("Add new Map node: " + node.toString());
+        		}else { //Level exist in the list
+        			node = trie.get(i);
+        			if(node.containsKey(c)) {
+        				//Element already exist, there decrease value
+						counter--;
+					}else {
+						node.put(c, counter);
+					}
+					System.out.println("Add c: " + c + ", i+1: " + counter);
+        		}
+        		
+        		System.out.println("Final Map node: " + node.toString());
+				System.out.println("Final List trie: " + trie.toString());
+        	}
+        }
+        
         return trie;
     }
 
